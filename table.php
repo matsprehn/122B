@@ -6,8 +6,9 @@ echo "<h1>".$table."</h1></br>";
 
 
 $query = "select * from information_schema.table_privileges where table_name = '".$table."'";
-//echo $query;
+echo $query;
 $result = mysql_query($query, $con);
+$allUsers[0] = "";
 
 if ($result == FALSE || mysql_num_rows($result) < 1) //empty result set
 {
@@ -23,26 +24,27 @@ else
 	<?php
 	$currentUser = NULL;
 	$i = 0;
-	$allUsers;
+
 	while ($row = mysql_fetch_array($result))
 	{
-		if ($currentUser != $row['GRANTEE'])
+		if ($currentUser != $row['GRANTEE']) //if the user changes
 		{
-			if($currentUser == NULL)
+			if($currentUser == NULL)		//if currrentUser was never set
 			{
 				$allUsers[$i] = $row['GRANTEE'];
 				$i++;
-				$currentUser = $row['GRANTEE'];?>
-				<tr><td><?echo(str_replace("'", "", $currentUser));?></td>
+				$currentUser = $row['GRANTEE'];
+				$grantable = $row['IS_GRANTABLE'];?>
+				<tr><td><a href = "addToTable.php?user=<?echo($currentUser);?>&table=<?echo($table);?>&database=<?echo($database);?>&exists=TRUE"><?echo(str_replace("'", "", $currentUser));?></td>
 				<td><?echo($row['PRIVILEGE_TYPE']);
 			}
 			else
 			{
-				?></td><td><?echo($row['IS_GRANTABLE']);?></td>
+				?></td><td><?echo($grantable);?></td>
 				<?$currentUser = $row['GRANTEE'];
 				  $allUsers[$i] = $row['GRANTEE'];
 				  $i++;?>
-				<tr><td><?echo($currentUser);?></td>
+				<tr><td><a href = "addToTable.php?user=<?echo($currentUser);?>&table=<?echo($table);?>&database=<?echo($database);?>&exists=TRUE"><?echo(str_replace("'", "", $currentUser));?></td>
 				<td><?echo($row['PRIVILEGE_TYPE']);
 			}
 
@@ -66,7 +68,10 @@ while ($row = mysql_fetch_array($result))
 	$users = "'".$row["User"]."'@'".$row["Host"]."'";
 	$user = $row["User"];
 	$host = $row["Host"];
+	if(!in_array($users, $allUsers))
+	{
 	?><a href ="addToTable.php?user=<?echo($users);?>&database=<?echo($database);?>&table=<?echo($table);?>"><?echo($row["User"]."@".$row["Host"]);?></a>
 	<br><?php
-	$i++;
+	}
  }
+ ?>
