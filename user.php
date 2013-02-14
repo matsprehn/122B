@@ -14,6 +14,12 @@ else
 	$i = 3;
 	?>
 	<h2>Privileges for <font color = "red"><?echo($user."@".$host)?></font></h2>
+	<div class = 'pull-right space-me'>
+		<form action = "deleteUser.php" method = "post">
+			<input type = "hidden" name = "user" value = "<?echo("'".$user."'@'".$host."'")?>">
+			<input type = "submit" value = "DELETE USER">
+		</form>
+	</div>
 	<div class ='pull-left space-me'>
 	<h3> Global Privileges</h3>
 

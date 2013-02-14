@@ -18,7 +18,7 @@
 	 {
 		$password = $_POST['password'];
 	 }
-	 echo ($_POST['hostName']);
+	 //echo ($_POST['hostName']);
 	 if(!isset($_POST['hostName']) || $_POST['hostName'] == NULL) 
 	 {
 		$hostName = '%'; //if not specified make it for all domains
@@ -45,7 +45,7 @@
 		else
 		{
 			$query = "CREATE USER '".$userName."'@'".$hostName."'";
-			echo ($query);
+			//echo ($query);
 		}
 		$ok = mysql_query($query, $con);
 		//echo ("</br></br>".$query);
