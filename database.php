@@ -3,7 +3,7 @@ include('header.php');
 $database = $_GET["database"];
 $query = "select * from mysql.db WHERE Db = '".$database."'";
 echo "<h1>".$database."</h1></br>";
-echo $query;
+//echo $query;
 $result = mysql_query($query, $con);
 $allUsers[0] = "";
 

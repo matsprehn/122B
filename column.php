@@ -1,15 +1,16 @@
-<?php
+<?
 include('header.php');
 $table = $_GET["table"];
 $database = $_GET["database"];
-echo "<h1>".$table."</h1></br>";
-
-
-$query = "select * from information_schema.table_privileges where table_name = '".$table."'";
-//echo $query;
-$result = mysql_query($query, $con);
+$column = $_GET["column"];
+echo "<h1>".$table.".".$column."</h1></br>";
 $allUsers[0] = "";
 
+
+$query = "select * from information_schema.column_privileges where table_name = '".$table."' AND column_name = '".$column."' AND table_schema = '".$database."'";
+//echo $query;
+
+$result = mysql_query($query, $con);
 if ($result == FALSE || mysql_num_rows($result) < 1) //empty result set
 {
 	echo "no unique permissions for this table";
@@ -35,7 +36,7 @@ else
 				$i++;
 				$currentUser = $row['GRANTEE'];
 				$grantable = $row['IS_GRANTABLE'];?>
-				<tr><td><a href = "addToTable.php?user=<?echo($currentUser);?>&table=<?echo($table);?>&database=<?echo($database);?>&exists=TRUE"><?echo(str_replace("'", "", $currentUser));?></td>
+				<tr><td><a href = "addToColumn.php?user=<?echo($currentUser);?>&table=<?echo($table);?>&database=<?echo($database);?>&column=<?echo($column)?>&exists=TRUE"><?echo(str_replace("'", "", $currentUser));?></td>
 				<td><?echo($row['PRIVILEGE_TYPE']);
 			}
 			else
@@ -44,7 +45,7 @@ else
 				<?$currentUser = $row['GRANTEE'];
 				  $allUsers[$i] = $row['GRANTEE'];
 				  $i++;?>
-				<tr><td><a href = "addToTable.php?user=<?echo($currentUser);?>&table=<?echo($table);?>&database=<?echo($database);?>&exists=TRUE"><?echo(str_replace("'", "", $currentUser));?></td>
+				<tr><td><a href = "addToColumn.php?user=<?echo($currentUser);?>&table=<?echo($table);?>&database=<?echo($database);?>&column=<?echo($column)?>&exists=TRUE"><?echo(str_replace("'", "", $currentUser));?></td>
 				<td><?echo($row['PRIVILEGE_TYPE']);
 				$grantable = $row['IS_GRANTABLE'];
 			}
@@ -71,7 +72,7 @@ while ($row = mysql_fetch_array($result))
 	$host = $row["Host"];
 	if(!in_array($users, $allUsers))
 	{
-	?><a href ="addToTable.php?user=<?echo($users);?>&database=<?echo($database);?>&table=<?echo($table);?>"><?echo($row["User"]."@".$row["Host"]);?></a>
+	?><a href ="addToColumn.php?user=<?echo($users);?>&database=<?echo($database);?>&table=<?echo($table);?>&column=<?echo($column)?>"><?echo($row["User"]."@".$row["Host"]);?></a>
 	<br><?php
 	}
  }

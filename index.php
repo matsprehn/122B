@@ -55,7 +55,7 @@ $result = (mysql_query("show databases",$con));
 			while ($tbrow = mysql_fetch_array($column_result)) 	// get columns in table
 			{
 			 echo ("<tr>
-					<td>".$tbrow['Field']."</td>
+					<td><a href ='column.php?column=".$tbrow['Field']."&table=".$table."&database=".$database."'>".$tbrow['Field']."</td>
 					<td>".$tbrow['Type']."</td>
 					<td>".$tbrow['Null']."</td>
 					<td>".$tbrow['Key']."</td>
