@@ -44,6 +44,8 @@ $privileges;
 	while($row = mysql_fetch_array($result))
 	{
 		$j =0;
+		$allNames[$i] = $row[2]; //get name without domain
+		$allDomains[$i] = $row[0];
 		$allUsers[$i] = "'".$row[2]."'@'".$row[0]."'";
 		$userPrint[$i] = $row[2]."@".$row[0];
 		$permissions[$i][$j]= $row[3]; $j++;
@@ -69,7 +71,7 @@ $privileges;
 	$i = 0;
 	while ($i < count($allUsers))
 	{?>
-		<tr><td><?echo($userPrint[$i])?></td>
+		<tr><td><a href = "addToDatabase.php?user=<?echo($allUsers[$i])?>&database=<?echo($database);?>&name=<?echo($allNames[$i])?>&domain=<?echo($allDomains[$i])?>"><?echo($userPrint[$i])?></a></td>
 		<td>
 		<? 
 		$j = 0;
@@ -84,6 +86,7 @@ $privileges;
 		?></td></tr><?
 		$i++;
 	}
+}
 ?>
 </tbody></table>
 
@@ -107,4 +110,3 @@ while ($row = mysql_fetch_array($result))
 			
 			
 <?
-}?>

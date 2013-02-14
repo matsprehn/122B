@@ -2,22 +2,32 @@
  include('header.php');
  $user = $_GET['user'];
  $database = $_GET['database'];
- function getPrivilege($string, $query, $con)
+ if(isset($_GET['name']) && isset($_GET['domain']))
+ {
+	$name = $_GET['name'];
+	$domain = $_GET['domain'];
+	 $query = "select Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv, Drop_priv, Grant_priv, References_priv, Index_priv, Alter_priv, Create_tmp_table_priv, Lock_tables_priv, Create_view_priv, Show_view_priv, Create_routine_priv, Alter_routine_priv, Execute_priv, Event_priv, Trigger_priv from mysql.db WHERE Db ='".$database."' AND User ='".$name."' AND Host ='".$domain."'";
+ }
+ else $query = "";
+echo $query;
+ function getPrivilege($index, $query, $con)
 {
 	$result = mysql_query($query, $con);
 	if ($result != FALSE)
 	{
-		
-		//echo ("okay");
+	
 		while ($row = mysql_fetch_array($result))
 		{
-			//echo $string;
-			if (strcmp($string, strtolower($row[0])) == 0)
+			if (($row[$index]) == "Y")
 			{
 				echo "checked";
 				break;
 			}
-		}
+			else
+			{
+				echo "unchecked";
+			}
+		}		
 	}
 }
 
@@ -40,11 +50,14 @@ while ($row = mysql_fetch_array($result2))
 	else
 	{
 		$privilegeName[$i] = str_replace("_priv", "", $row[0]);
-		
+		if ($i == 10)
+		{
+			$privilegeName[$i] = "Create Temporary Tables";
+		}
 		?><tr>
 			<td><?echo($privilegeName[$i])?></td>
 			<td><input type="checkbox" 
-				name="<?echo($i)?>" value="<?echo(str_replace("_"," ", $privilegeName[$i]))?>"></td></tr>
+				name="<?echo($i)?>" value="<?echo(str_replace("_"," ", $privilegeName[$i]))?>" <?getPrivilege($i, $query, $con)?>></td></tr>
 		
 		<?
 		$i++;
@@ -56,8 +69,18 @@ while ($row = mysql_fetch_array($result2))
    <input type = "hidden" name = "user" value = "<?echo($user)?>">
   <input type = "submit" value = "submit">
   </form>
- <?
-$query = "select Select_priv, Insert_priv, Update_priv, Delete_priv, Create_priv, Drop_priv, Grant_priv, References_priv, Index_priv, Alter_priv, Create_tmp_table_priv, Lock_tables_priv, Create_view_priv, Show_view_priv, Create_routine_priv, Alter_routine_priv, Execute_priv, Event_priv, Trigger_priv from mysql.db WHERE Db ='".$database."' AND User =\"".$user."\"";
-//echo $query."</br>";
-$query4 = "select * from mysql.db WHERE Db ='".$database."' AND User =\"".$user."\"";
+<?
+if (isset($_GET['name']))
+{
+	?>
+	<div class = "pull-right">
+		<form action = "completeAddToDatabase.php" method = "post">
+		<input type = "hidden" name = "dropUser" value = "dropUser">
+		<input type = "hidden" name = "database"value = "<?echo($database)?>">
+		<input type = "hidden" name = "user" value = "<?echo($user)?>">
+		<input type = "submit" value = "REMOVE USER FROM TABLE">
+		</form>
+	</div>
+	<?
+}
 ?>

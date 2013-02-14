@@ -9,9 +9,9 @@
  if (isset($_POST['dropUser']))
  {
 	$query2 = "Revoke All Privileges on ".$database.".".$table." from ".$user; //clean the slate;
-	echo $query2;
+	//echo $query2;
 	$query3 = "Revoke Grant Option on ".$database.".".$table." from ".$user;
-	echo $query3;
+	//echo $query3;
 	$result = mysql_query($query2, $con);
 	$result = mysql_query($query3, $con);
 	?><meta http-equiv="REFRESH" content="2;url=table.php?database=<?echo($database)?>&table=<?echo($table)?>"><?
@@ -94,7 +94,7 @@
 		 while ($i < $j)
 		 {
 			$part .= $permission[$i];
-			echo ($permission[$i]."<br/>");
+			//echo ($permission[$i]."<br/>");
 			if ($i+1 != $j)
 			{
 				$part .= ', ';
@@ -110,9 +110,9 @@
 		 $query = "Grant ".$part." on ".$database.".".$table." to ".$user." ".$grant_option;
 		 $query2 = "Revoke All Privileges on ".$database.".".$table." from ".$user; //clean the slate;
 		 $query3 = "Revoke Grant Option on ".$database.".".$table." from ".$user;
-		 echo ($query."<br />");
-		 echo ($query2."<br/>");
-		 echo ($query3);
+		//echo ($query."<br />");
+		// echo ($query2."<br/>");
+		//echo ($query3);
 		 $result2 = mysql_query($query2, $con); //revoke all access, then grant access based on checkmarks
 		 $result3 = mysql_query($query3, $con);
 		 $result = mysql_query($query, $con);
