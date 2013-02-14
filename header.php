@@ -21,7 +21,8 @@ if (!$con)
 				 <div class = "nav-collapse collapse">   
 					 <ul class ="nav">   
 						 <li><a href = "index.php">Databases</a></li>   
-						 <li><a href = "listusers.php">Show users</a></li>     
+						 <li><a href = "listusers.php">Show users</a></li> 
+						 <li><a href = "listProcedure.php">Show Procedures</a></li>
 					 </ul>   
 				 </div>   
 			 </div>   

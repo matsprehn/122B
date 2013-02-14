@@ -6048,4 +6048,7 @@ a.badge:hover {
 .affix {
   position: fixed;
 }
+.space-me{
+	padding: 20px;
+}
 
