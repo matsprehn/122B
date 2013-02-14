@@ -23,8 +23,13 @@ $result = (mysql_query("show databases",$con));
  {
 	$database = $row['Database'];
 
-	echo("<h1 id ='".$row['Database']."'>".$row['Database']."</h1>");
-	
+	?>
+	<h1 id ="<?echo($row['Database'])?>">
+		<a href = "database.php?database=<?echo($row['Database'])?>">
+			<?echo($row['Database'])?>
+		</a>
+	</h1>
+	<?
 		$query = "show tables in ".$database."";
 
 		$table_result = (mysql_query($query, $con));
