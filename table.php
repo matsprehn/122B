@@ -5,7 +5,7 @@ $database = $_GET["database"];
 echo "<h1>".$table."</h1></br>";
 
 
-$query = "select * from information_schema.table_privileges where table_name = '".$table."'";
+$query = "select * from information_schema.table_privileges where table_name = '".$table."' AND table_schema = '".$database."'";
 //echo $query;
 $result = mysql_query($query, $con);
 $allUsers[0] = "";
