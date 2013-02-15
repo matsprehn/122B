@@ -58,7 +58,7 @@ if (isset($_GET["exists"]))
 		<input type = "hidden" name = "table" value = "<?echo($table)?>">
 		<input type = "hidden" name = "user" value = "<?echo($user)?>">
 		<input type = "hidden" name = "column" value = "<?echo($column)?>">
-		<input type = "submit" value = "REMOVE USER FROM TABLE">
+		<input type = "submit" value = "REMOVE USER FROM COLUMN">
 		</form>
 	</div>
 	<?
